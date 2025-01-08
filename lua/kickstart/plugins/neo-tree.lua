@@ -15,10 +15,20 @@ return {
   },
   opts = {
     filesystem = {
+      follow_current_file = {
+        enabled = true,
+        leave_dirs_open = false,
+      },
+      group_empty_dirs = true,
+      use_libuv_file_watcher = true,
       filtered_items = {
         visible = true,
+        hide_gitignored = false,
+        hide_dotfiles = false,
+        hide_hidden = false,
       },
       window = {
+        width = 30,
         mappings = {
           ['\\'] = 'close_window',
         },
@@ -28,6 +38,10 @@ return {
       -- local signs = { Error = '', Warn = '', Hint = '', Info = '' }
       name = {
         use_git_status_colors = false,
+      },
+      modified = {
+        symbol = '',
+        -- highlight = 'NeoTreeModified',
       },
       diagnostics = {
         symbols = {
@@ -57,6 +71,7 @@ return {
         indent_marker = '',
         last_indent_marker = '└',
         indent_size = 2,
+        padding = 1,
       },
     },
   },

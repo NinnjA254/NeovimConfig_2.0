@@ -26,6 +26,10 @@ local customizeAppearance = function()
   vim.cmd 'highlight normal guibg=none'
   vim.cmd 'highlight normalfloat guibg=none'
   vim.cmd 'highlight nontext guibg=none'
+
+  -- neotree
+  vim.api.nvim_set_hl(0, 'NeoTreeDimText', { bg = 'NONE', fg = 'grey' })
+  vim.api.nvim_set_hl(0, 'NeoTreeDotfile', { bg = 'NONE', fg = '#a5a5a5' })
 end
 
 vim.api.nvim_create_augroup('customizeAppearance', { clear = true })
