@@ -763,7 +763,7 @@ require('lazy').setup({
         if filetype == 'toggleterm' then -- toggleterm toggle_number to the buffer
           return '%17.(Terminal[%{b:toggle_number}]%) --->  %#termcursor#In The Mainframe!%#termcursornc#  '
         end
-        if filetype == 'NvimTree' then
+        if filetype == 'neo-tree' then
           return MiniStatusline.combine_groups {
             { hl = 'MiniStatuslineFileinfo', strings = { '' } },
           }
@@ -796,7 +796,7 @@ require('lazy').setup({
         if filetype == 'toggleterm' then
           return '%17.(Terminal[%{b:toggle_number}]%) --->  %#termcursor#In The Mainframe!%#termcursornc#  '
         end
-        if filetype == 'NvimTree' then
+        if filetype == 'neo-tree' then
           return ''
         end
         local filename = MiniStatusline.section_filename { trunc_width = 140 }
@@ -873,7 +873,7 @@ require('lazy').setup({
   require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
+  require 'kickstart.plugins.neo-tree',
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
