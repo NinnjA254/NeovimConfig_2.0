@@ -3,7 +3,7 @@
 
 # Telescope and lsp
 - different keybindings for workspace search and local(current file) search
-> Idea:
+Idea:
 | Local                | workspace                      |
 |----------------------|--------------------------------|
 | fr(Find References)  |  fwr(Find Workspace References)|
