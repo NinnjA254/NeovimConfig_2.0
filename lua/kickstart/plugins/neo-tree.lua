@@ -19,7 +19,7 @@ return {
         enabled = true,
         leave_dirs_open = false,
       },
-      group_empty_dirs = true,
+      group_empty_dirs = false,
       use_libuv_file_watcher = true,
       filtered_items = {
         visible = true,
