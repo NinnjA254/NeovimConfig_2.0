@@ -6,6 +6,7 @@
 
   Idea:
   
-  | Local                | workspace                      |
-  |----------------------|--------------------------------|
-  | fr(Find References)  |  fwr(Find Workspace References)|
+  | Local                | workspace                       |
+  |----------------------|---------------------------------|
+  | fr(Find References)  |  fwr(Find Workspace References) |
+  | fd(Find Diagnostics) |  fwd(Find Workspace Diagnostics)|
