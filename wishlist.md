@@ -3,7 +3,7 @@
 
 # Telescope and lsp
 - different keybindings for workspace search and local(current file) search
-
+- add keybinding for :Telescope resume
   Idea:
   
   | Local                | workspace                       |
