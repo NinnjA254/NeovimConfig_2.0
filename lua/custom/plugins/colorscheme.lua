@@ -1,9 +1,26 @@
 local customizeAppearance = function()
-  vim.opt.fillchars = { eob = '.' } --end of buffer indicator
+  vim.opt.fillchars = { eob = '.', fold = ' ' }
+
+  --transparent background, might break if colorschemes add new highlight groups?
   vim.cmd 'highlight vertsplit guibg=none'
   vim.cmd 'highlight linenr guibg=none'
   vim.cmd 'highlight signcolumn guibg=none'
+  vim.cmd 'highlight normal guibg=none'
+  vim.cmd 'highlight normalfloat guibg=none'
+  vim.cmd 'highlight nontext guibg=none'
+  -- vim.cmd 'highlight folded guibg=none'
+  vim.cmd 'highlight foldcolumn guibg=none'
 
+  local highlights = vim.inspect(vim.api.nvim_get_hl(0, {}))
+  local output_path = vim.fn.getcwd() .. '/hi.lua'
+  local file = io.open(output_path, 'w')
+  if file then
+    file:write(highlights)
+    file:close()
+    print('Highlights written to: ' .. output_path)
+  else
+    print 'Failed to write to file.'
+  end
   --nvim-cmp highlight groups
   -- gray
   vim.api.nvim_set_hl(0, 'CmpItemAbbrDeprecated', { bg = 'NONE', strikethrough = true, fg = '#808080' })
@@ -21,11 +38,6 @@ local customizeAppearance = function()
   vim.api.nvim_set_hl(0, 'CmpItemKindKeyword', { bg = 'NONE', fg = '#D4D4D4' })
   vim.api.nvim_set_hl(0, 'CmpItemKindProperty', { link = 'CmpItemKindKeyword' })
   vim.api.nvim_set_hl(0, 'CmpItemKindUnit', { link = 'CmpItemKindKeyword' })
-
-  --transparent background, expecting this to break lol
-  vim.cmd 'highlight normal guibg=none'
-  vim.cmd 'highlight normalfloat guibg=none'
-  vim.cmd 'highlight nontext guibg=none'
 
   -- neotree
   vim.api.nvim_set_hl(0, 'NeoTreeDimText', { bg = 'NONE', fg = 'grey' })

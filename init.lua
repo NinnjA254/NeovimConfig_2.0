@@ -95,7 +95,7 @@ vim.keymap.set({ 'n', 'v' }, '<leader>d', '"_d')
 -- make a file executable with simple command.
 vim.keymap.set('n', '<leader>x', '<cmd>!chmod +x %<CR>', { silent = true })
 
--- supposed to yank to the system clipboard but does not work on vagrant vm.
+-- Yank to the system clipboard.
 vim.keymap.set('n', '<leader>y', '"+y')
 vim.keymap.set('v', '<leader>y', '"+y')
 vim.keymap.set('n', '<leader>Y', '"+Y')
@@ -139,6 +139,39 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
+
+-- configure diagnostics
+local signsConfig = {
+  numhl = {
+    [vim.diagnostic.severity.ERROR] = 'DiagnosticSignError',
+    [vim.diagnostic.severity.WARN] = 'DiagnosticSignWarn',
+    [vim.diagnostic.severity.INFO] = 'DiagnosticSignInfo',
+    [vim.diagnostic.severity.HINT] = 'DiagnosticSignHint',
+  },
+}
+if vim.g.have_nerd_font then
+  signsConfig.text = {
+    [vim.diagnostic.severity.ERROR] = '',
+    [vim.diagnostic.severity.WARN] = '',
+    [vim.diagnostic.severity.INFO] = '',
+    [vim.diagnostic.severity.HINT] = '',
+  }
+end
+vim.diagnostic.config {
+  severitry_sort = true,
+  virtual_text = {
+    source = true,
+  },
+  float = {
+    header = 'mashidaa:',
+    border = 'rounded',
+  },
+  signs = signsConfig,
+}
+
+-- configure code folding -- for appearance config(highlight groups and so on), refer to colorscheme.lua
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
@@ -438,7 +471,9 @@ require('lazy').setup({
           map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
           map('<leader>r', vim.lsp.buf.rename, '[R]ename')
           map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
-          map('K', vim.lsp.buf.hover, 'Hover documentation')
+          map('K', function()
+            vim.lsp.buf.hover { border = 'rounded' }
+          end, 'Hover documentation')
 
           map('<leader>dj', vim.diagnostic.goto_next, '[D]iagnostic next')
           map('<leader>df', vim.diagnostic.open_float, '[D]iagnostic [F]loat')
@@ -484,16 +519,6 @@ require('lazy').setup({
           end
         end,
       })
-
-      -- Change diagnostic symbols in the sign column (gutter)
-      if vim.g.have_nerd_font then
-        -- local signs = { Error = '', Warn = '', Hint = '', Info = '' }
-        local signs = { Error = '', Warn = '', Hint = '', Info = '' }
-        for type, icon in pairs(signs) do
-          local hl = 'DiagnosticSign' .. type
-          vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-        end
-      end
 
       -- LSP servers and clients are able to communicate to each other what features they support.
       --  By default, Neovim doesn't support everything that is in the LSP specification.
