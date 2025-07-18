@@ -11,16 +11,6 @@ local customizeAppearance = function()
   -- vim.cmd 'highlight folded guibg=none'
   vim.cmd 'highlight foldcolumn guibg=none'
 
-  local highlights = vim.inspect(vim.api.nvim_get_hl(0, {}))
-  local output_path = vim.fn.getcwd() .. '/hi.lua'
-  local file = io.open(output_path, 'w')
-  if file then
-    file:write(highlights)
-    file:close()
-    print('Highlights written to: ' .. output_path)
-  else
-    print 'Failed to write to file.'
-  end
   --nvim-cmp highlight groups
   -- gray
   vim.api.nvim_set_hl(0, 'CmpItemAbbrDeprecated', { bg = 'NONE', strikethrough = true, fg = '#808080' })
