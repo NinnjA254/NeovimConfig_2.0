@@ -1,0 +1,142 @@
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- optionally enable 24-bit colour
+vim.opt.termguicolors = true
+
+local function on_attach(bufnr)
+  local api = require 'nvim-tree.api'
+
+  local function opts(desc)
+    return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+  end
+
+  -- default mappings
+  api.config.mappings.default_on_attach(bufnr)
+
+  -- custom mappings
+  vim.keymap.set('n', '?', api.tree.toggle_help, opts 'Help')
+
+  local comment_hl = vim.api.nvim_get_hl(0, { name = 'Comment', link = false })
+  local diagnostic_hl = vim.api.nvim_get_hl(0, { name = 'Comment', link = false })
+  vim.api.nvim_set_hl(0, 'NvimTreeHiddenIcon', { fg = comment_hl.fg })
+  vim.api.nvim_set_hl(0, 'NvimTreeDiagnosticErrorFileHL', { link = 'DiagnosticError' })
+  vim.api.nvim_set_hl(0, 'NvimTreeDiagnosticWarnFileHL', { link = 'DiagnosticWarn' })
+  vim.api.nvim_set_hl(0, 'NvimTreeDiagnosticInfoFileHL', { link = 'DiagnosticInfo' })
+  vim.api.nvim_set_hl(0, 'NvimTreeDiagnosticHintFileHL', { link = 'DiagnosticHint' })
+end
+
+return {
+  'nvim-tree/nvim-tree.lua',
+  version = '*',
+  lazy = false,
+  dependencies = {
+    'nvim-tree/nvim-web-devicons',
+  },
+  opts = {
+    on_attach = on_attach,
+    sync_root_with_cwd = true,
+    -- reload_on_bufenter = true,
+    -- respect_buf_cwd = true,
+    -- centralize_selection = false,
+    --debounce_delay = 15,
+    --preserve_window_proportions = false,
+    view = {
+      number = false,
+      relativenumber = false,
+      signcolumn = 'yes',
+    },
+    renderer = {
+      root_folder_label = function(path)
+        return vim.fn.fnamemodify(path, ':t')
+      end,
+      indent_width = 1,
+      --hidden_display = 'none',
+      highlight_git = 'none',
+      -- highlight_diagnostics = 'none',
+      --highlight_modified = 'none',
+      highlight_hidden = 'all',
+      indent_markers = {
+        enable = true,
+        icons = {
+          corner = '',
+          edge = '',
+          item = '',
+          -- item = '│└',
+          bottom = '─',
+          none = ' ',
+        },
+      },
+      icons = {
+        git_placement = 'right_align',
+        modified_placement = 'signcolumn',
+        -- hidden_placement = 'after',
+        diagnostics_placement = 'right_align',
+        -- glyphs = {
+        --   git = {
+        --     unstaged = "✗",
+        --     staged = '✓',
+        --     unmerged = '',
+        --     renamed = '➜',
+        --     untracked = '★',
+        --     deleted = '',
+        --     ignored = '◌',
+        --   },
+        -- },
+        show = {
+          -- folder = true,
+          folder_arrow = false,
+          hidden = false,
+          modified = true,
+        },
+      },
+    },
+    update_focused_file = {
+      enable = true,
+      -- update_root = {
+      -- enable = false,
+      -- },
+    },
+    git = {
+      show_on_open_dirs = false,
+      -- timeout = 400,
+    },
+    diagnostics = {
+      enable = true,
+      -- debounce_delay = 500,
+      show_on_dirs = true,
+      show_on_open_dirs = false,
+      icons = {
+        error = '',
+        warning = '',
+        info = '',
+        hint = '',
+      },
+    },
+    modified = {
+      enable = true,
+      show_on_dirs = true,
+      show_on_open_dirs = false,
+    },
+    live_filter = {
+      always_show_folders = false,
+    },
+    actions = {
+      change_dir = {
+        global = true,
+      },
+      expand_all = {
+        exclude = { '.git', 'build', 'node_modules' },
+      },
+    },
+  },
+  config = function(_, opts)
+    require('nvim-tree').setup(opts)
+    vim.keymap.set('n', '\\', ':NvimTreeFindFileToggle<CR>', {
+      desc = 'nvim-tree: Toggle',
+      noremap = true,
+      silent = true,
+      nowait = true,
+    })
+  end,
+}

@@ -37,8 +37,8 @@ vim.opt.shellredir = '| Out-File -Encoding UTF8 %s'
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 -- disable netrw at the start. strongly advised by vimtree (from the primeagen)
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+-- vim.g.loaded_netrw = 1
+-- vim.g.loaded_netrwPlugin = 1
 --line numbering
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -171,7 +171,15 @@ vim.diagnostic.config {
 
 -- configure code folding -- for appearance config(highlight groups and so on), refer to colorscheme.lua
 vim.opt.foldmethod = 'expr'
+vim.opt.foldlevel = 69
 vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+function _G.custom_fold_text()
+  local foldFirstLine = vim.fn.getline(vim.v.foldstart)
+  local foldLastLine = vim.fn.getline(vim.v.foldend)
+  local lines_count = vim.v.foldend - vim.v.foldstart + 1
+  return foldFirstLine .. ' 󰘖  ' .. foldLastLine:match '^%s*(.-)%s*$' .. '  -> ' .. lines_count .. ' lines '
+end
+vim.opt.foldtext = 'v:lua.custom_fold_text()'
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
@@ -904,7 +912,6 @@ require('lazy').setup({
   require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
-  require 'kickstart.plugins.neo-tree',
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`

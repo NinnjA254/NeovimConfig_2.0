@@ -1,5 +1,9 @@
 # code folding
-- vs code aesthetics for them code folds.
+better code folding aesthetics
+    
+## potential resources:
+1. Look at how neovim distros and folding plugins achieve syntax highlighting within folded lines(eg. in nvim-ufo)
+2. [advanced folding](https://learnvimscriptthehardway.stevelosh.com/chapters/49.html)
 
 # Toggle term
 - some cool keybindings to switch between terminal layouts

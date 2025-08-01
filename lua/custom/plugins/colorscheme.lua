@@ -1,5 +1,11 @@
 local customizeAppearance = function()
-  vim.opt.fillchars = { eob = '.', fold = ' ' }
+  vim.opt.fillchars = {
+    eob = '.',
+    fold = ' ',
+    foldopen = '',
+    foldsep = ' ',
+    foldclose = '',
+  }
 
   --transparent background, might break if colorschemes add new highlight groups?
   vim.cmd 'highlight vertsplit guibg=none'
@@ -8,7 +14,7 @@ local customizeAppearance = function()
   vim.cmd 'highlight normal guibg=none'
   vim.cmd 'highlight normalfloat guibg=none'
   vim.cmd 'highlight nontext guibg=none'
-  -- vim.cmd 'highlight folded guibg=none'
+  vim.cmd 'highlight folded guibg=none guifg=#70b950'
   vim.cmd 'highlight foldcolumn guibg=none'
 
   --nvim-cmp highlight groups
