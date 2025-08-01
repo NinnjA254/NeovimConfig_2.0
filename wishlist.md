@@ -5,8 +5,9 @@ better code folding aesthetics
 1. Look at how neovim distros and folding plugins achieve syntax highlighting within folded lines(eg. in nvim-ufo)
 2. [advanced folding](https://learnvimscriptthehardway.stevelosh.com/chapters/49.html)
 
-# Toggle term
+# Terminal
 - some cool keybindings to switch between terminal layouts
+- Feature ideas from vs code?
 
 # Telescope and lsp
 - different keybindings for workspace search and local(current file) search
