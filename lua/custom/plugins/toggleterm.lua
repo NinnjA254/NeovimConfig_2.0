@@ -2,11 +2,13 @@ local config = function(_, opts)
   local tt = require 'toggleterm'
   tt.setup(opts)
   local trim_spaces = false
-  vim.keymap.set('n', '<f10>', ':ToggleTerm direction=float<CR>', { silent = true })
-  vim.keymap.set('t', '<f10>', '<C-\\><C-n>:ToggleTerm direction=float<CR>', { silent = true })
+  vim.keymap.set({ 'n', 't' }, '<f10>', function()
+    vim.cmd(vim.v.count .. 'ToggleTerm direction=float')
+  end)
 
-  vim.keymap.set('n', '<f9>', ':ToggleTerm direction=horizontal<CR>', { silent = true })
-  vim.keymap.set('t', '<f9>', '<C-\\><C-n>:ToggleTerm direction=horizontal<CR>', { silent = true })
+  vim.keymap.set({ 'n', 't' }, '<f9>', function()
+    vim.cmd(vim.v.count .. 'ToggleTerm direction=horizontal')
+  end)
 
   vim.keymap.set('v', '<leader>s', function()
     tt.send_lines_to_terminal('visual_selection', trim_spaces, { args = vim.v.count })
